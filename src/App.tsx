@@ -40,7 +40,7 @@ export default function App() {
   const close = () => setOverlay({ kind: 'none' })
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-dvh flex-col">
       <Header
         completedCount={completedHabits.length}
         onOpenCompleted={() => setOverlay({ kind: 'completed-list' })}

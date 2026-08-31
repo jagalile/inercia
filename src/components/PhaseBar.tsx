@@ -30,7 +30,7 @@ export default function PhaseBar({ phases, currentDay, accent }: PhaseBarProps) 
           return (
             <div
               key={phase.key}
-              className={`flex-1 transition-colors ${isCurrent ? 'text-stone-700 dark:text-stone-200' : ''}`}
+              className={`flex-1 text-center transition-colors ${isCurrent ? 'text-stone-700 dark:text-stone-200' : ''}`}
             >
               {phase.label}
             </div>

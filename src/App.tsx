@@ -9,6 +9,7 @@ import CompletedPanel from './components/CompletedPanel'
 import CompletedHabitDetail from './components/CompletedHabitDetail'
 import SettingsPanel from './components/SettingsPanel'
 import ConfirmDialog from './components/ConfirmDialog'
+import InfoPanel from './components/InfoPanel'
 
 type Overlay =
   | { kind: 'none' }
@@ -17,6 +18,7 @@ type Overlay =
   | { kind: 'completed-list' }
   | { kind: 'completed-detail'; habit: Habit }
   | { kind: 'settings' }
+  | { kind: 'info' }
   | { kind: 'confirm-delete'; habit: Habit }
   | { kind: 'reopen-blocked' }
 
@@ -43,6 +45,7 @@ export default function App() {
         completedCount={completedHabits.length}
         onOpenCompleted={() => setOverlay({ kind: 'completed-list' })}
         onOpenSettings={() => setOverlay({ kind: 'settings' })}
+        onOpenInfo={() => setOverlay({ kind: 'info' })}
       />
 
       {activeHabit ? (
@@ -105,6 +108,8 @@ export default function App() {
       {overlay.kind === 'settings' && (
         <SettingsPanel habits={habits} onClose={close} onImport={importHabits} />
       )}
+
+      {overlay.kind === 'info' && <InfoPanel onClose={close} />}
 
       {overlay.kind === 'confirm-delete' && (
         <ConfirmDialog

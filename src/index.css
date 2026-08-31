@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  @apply bg-stone-50 text-stone-900 antialiased;
+  font-feature-settings: 'ss01' 1, 'tnum' 1;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    @apply bg-neutral-950 text-stone-100;
+  }
+}
+
+* {
+  transition:
+    background-color 0.6s ease,
+    border-color 0.6s ease,
+    color 0.4s ease;
+}
+
+::selection {
+  background: hsl(160 60% 45% / 0.25);
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Slim, understated scrollbars so the interface stays quiet. */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(0 0% 50% / 0.25);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}

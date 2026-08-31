@@ -34,6 +34,15 @@ adherencia real.
   según tu % de cumplimiento, en un degradado tranquilo de azul
   grisáceo (arrancando) a verde (sólido) — deliberadamente sin rojo.
 
+## PWA
+
+Es una Progressive Web App: se puede **instalar** (desde el menú del
+navegador o el aviso de "Añadir a inicio" en móvil) y funciona
+**offline** — el service worker (generado con `vite-plugin-pwa` sobre
+Workbox) precachea toda la app, así que una vez cargada una primera
+vez ya no necesita red. Al publicar una nueva versión, la app se
+actualiza sola en segundo plano (`registerType: 'autoUpdate'`).
+
 ## Datos
 
 Todo se guarda en `localStorage`, en tu navegador — no hay backend ni

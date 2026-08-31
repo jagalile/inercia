@@ -47,7 +47,7 @@ export default function HabitForm({ initial, onSubmit, onClose }: HabitFormProps
             onChange={(e) => setName(e.target.value)}
             placeholder="Ej. Leer 10 páginas"
             maxLength={80}
-            className="w-full rounded-xl border border-stone-200 bg-stone-50 px-3.5 py-2.5 text-[15px] outline-none transition focus:border-stone-400 focus:bg-white dark:border-neutral-700 dark:bg-neutral-800 dark:focus:border-neutral-500 dark:focus:bg-neutral-800"
+            className="w-full rounded-xl border border-stone-200 bg-stone-50 px-3.5 py-2.5 text-[15px] text-stone-900 outline-none transition focus:border-stone-400 focus:bg-white dark:border-neutral-700 dark:bg-neutral-800 dark:text-stone-100 dark:focus:border-neutral-500 dark:focus:bg-neutral-800"
           />
         </div>
 
@@ -61,7 +61,7 @@ export default function HabitForm({ initial, onSubmit, onClose }: HabitFormProps
             placeholder="¿Por qué te importa este hábito?"
             rows={2}
             maxLength={240}
-            className="w-full resize-none rounded-xl border border-stone-200 bg-stone-50 px-3.5 py-2.5 text-[15px] outline-none transition focus:border-stone-400 focus:bg-white dark:border-neutral-700 dark:bg-neutral-800 dark:focus:border-neutral-500"
+            className="w-full resize-none rounded-xl border border-stone-200 bg-stone-50 px-3.5 py-2.5 text-[15px] text-stone-900 outline-none transition focus:border-stone-400 focus:bg-white dark:border-neutral-700 dark:bg-neutral-800 dark:text-stone-100 dark:focus:border-neutral-500 dark:focus:bg-neutral-800"
           />
         </div>
 

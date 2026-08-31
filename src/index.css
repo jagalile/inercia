@@ -15,6 +15,10 @@ html,
 body,
 #root {
   height: 100dvh;
+  /* Don't let the browser auto-scroll to compensate when content
+     above the fold reflows (e.g. the web font swapping in) — that's
+     what was nudging the header out of view on refresh. */
+  overflow-anchor: none;
 }
 
 body {

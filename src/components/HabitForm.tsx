@@ -6,7 +6,6 @@ import {
   PERMISSIVENESS_LABELS,
   permissivenessHint,
 } from '../lib/habitLogic'
-import { todayISO } from '../lib/dates'
 import Modal from './Modal'
 import type { NewHabitInput } from '../hooks/useHabits'
 
@@ -24,7 +23,6 @@ export default function HabitForm({ initial, onSubmit, onClose }: HabitFormProps
   const [description, setDescription] = useState(initial?.description ?? '')
   const [difficulty, setDifficulty] = useState<Difficulty>(initial?.difficulty ?? 'simple')
   const [permissiveness, setPermissiveness] = useState<Permissiveness>(initial?.permissiveness ?? 'moderado')
-  const [startDate, setStartDate] = useState(initial?.startDate ?? todayISO())
   const [error, setError] = useState('')
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -33,7 +31,7 @@ export default function HabitForm({ initial, onSubmit, onClose }: HabitFormProps
       setError('Ponle un nombre al hábito.')
       return
     }
-    onSubmit({ name, description, difficulty, permissiveness, startDate })
+    onSubmit({ name, description, difficulty, permissiveness })
   }
 
   return (
@@ -129,17 +127,11 @@ export default function HabitForm({ initial, onSubmit, onClose }: HabitFormProps
           </p>
         </div>
 
-        <div>
-          <label className="mb-1.5 block text-sm font-medium text-stone-700 dark:text-stone-300">
-            Fecha de inicio
-          </label>
-          <input
-            type="date"
-            value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
-            className="w-full rounded-xl border border-stone-200 bg-stone-50 px-3.5 py-2.5 text-[15px] outline-none transition focus:border-stone-400 focus:bg-white dark:border-neutral-700 dark:bg-neutral-800 dark:focus:border-neutral-500"
-          />
-        </div>
+        {!initial && (
+          <p className="text-[12px] leading-relaxed text-stone-400">
+            Empieza hoy mismo — la mejor manera de cumplir un hábito es no dejarlo para otro día.
+          </p>
+        )}
 
         {error && <p className="text-sm text-red-500">{error}</p>}
 

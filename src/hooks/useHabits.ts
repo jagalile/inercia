@@ -9,7 +9,6 @@ export interface NewHabitInput {
   description: string
   difficulty: Difficulty
   permissiveness: Permissiveness
-  startDate: string
 }
 
 export function useHabits() {
@@ -36,7 +35,9 @@ export function useHabits() {
       description: input.description.trim(),
       difficulty: input.difficulty,
       permissiveness: input.permissiveness,
-      startDate: input.startDate || todayISO(),
+      // A habit always starts the day it's created — starting today,
+      // right away, is what actually gets a habit off the ground.
+      startDate: todayISO(),
       checkins: {},
       status: 'active',
       createdAt: now,

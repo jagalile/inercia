@@ -122,16 +122,11 @@ export default function HabitForm({ initial, onSubmit, onClose }: HabitFormProps
             ))}
           </div>
           <p className="mt-2 text-[12px] leading-relaxed text-stone-400">
-            Los días de margen son solo informativos: no hay penalización si los superas, tu
-            racha simplemente refleja el camino real que has recorrido.
+            Solo informativo: superarlo no penaliza.
           </p>
         </div>
 
-        {!initial && (
-          <p className="text-[12px] leading-relaxed text-stone-400">
-            Empieza hoy mismo — la mejor manera de cumplir un hábito es no dejarlo para otro día.
-          </p>
-        )}
+        {!initial && <p className="text-[12px] leading-relaxed text-stone-400">Se inicia hoy.</p>}
 
         {error && <p className="text-sm text-red-500">{error}</p>}
 

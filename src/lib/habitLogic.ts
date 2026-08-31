@@ -20,9 +20,9 @@ export const DIFFICULTY_LABELS: Record<Difficulty, string> = {
 }
 
 export const DIFFICULTY_HINTS: Record<Difficulty, string> = {
-  simple: '21 días — un hábito pequeño y concreto.',
-  moderado: '66 días — el tiempo medio para automatizar un hábito.',
-  complejo: '90 días — hábitos exigentes o de identidad.',
+  simple: '21 días',
+  moderado: '66 días',
+  complejo: '90 días',
 }
 
 /**

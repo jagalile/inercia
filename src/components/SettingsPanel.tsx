@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { Download, Upload } from 'lucide-react'
+import { Download, Smartphone, Upload } from 'lucide-react'
 import type { Habit } from '../types'
 import { downloadExport, ImportError, parseImport } from '../lib/storage'
 import Modal from './Modal'
@@ -70,6 +70,27 @@ export default function SettingsPanel({ habits, onClose, onImport }: SettingsPan
         />
 
         {error && <p className="text-sm text-red-500">{error}</p>}
+      </div>
+
+      <div className="mt-5 flex gap-3 rounded-2xl border border-stone-200 p-4 dark:border-neutral-800">
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-stone-100 dark:bg-neutral-800">
+          <Smartphone size={17} className="text-stone-600 dark:text-stone-300" />
+        </span>
+        <div className="text-xs leading-relaxed text-stone-500 dark:text-stone-400">
+          <p className="mb-1 text-sm font-semibold text-stone-800 dark:text-stone-100">Instalar la app</p>
+          <p>
+            <strong className="font-medium text-stone-600 dark:text-stone-300">Android:</strong> menú ⋮ →
+            «Añadir a pantalla de inicio».
+          </p>
+          <p>
+            <strong className="font-medium text-stone-600 dark:text-stone-300">iPhone:</strong> Compartir →
+            «Añadir a pantalla de inicio».
+          </p>
+          <p>
+            <strong className="font-medium text-stone-600 dark:text-stone-300">Escritorio:</strong> icono ⊕
+            en la barra de direcciones.
+          </p>
+        </div>
       </div>
 
       {pendingImport && (

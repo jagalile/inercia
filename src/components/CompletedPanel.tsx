@@ -1,8 +1,9 @@
 import { useMemo } from 'react'
 import type { Habit } from '../types'
-import { computeStats, DIFFICULTY_LABELS } from '../lib/habitLogic'
+import { computeStats } from '../lib/habitLogic'
 import { adherencePalette } from '../lib/color'
 import { formatShortDate } from '../lib/dates'
+import { useLanguage } from '../i18n/LanguageContext'
 import Modal from './Modal'
 
 interface CompletedPanelProps {
@@ -12,6 +13,7 @@ interface CompletedPanelProps {
 }
 
 function CompletedRow({ habit, onSelect }: { habit: Habit; onSelect: () => void }) {
+  const { t, lang } = useLanguage()
   const stats = useMemo(() => computeStats(habit, habit.completedAt?.slice(0, 10) ?? habit.startDate), [habit])
   const palette = useMemo(() => adherencePalette(stats.adherence), [stats.adherence])
 
@@ -29,8 +31,8 @@ function CompletedRow({ habit, onSelect }: { habit: Habit; onSelect: () => void 
       <div className="min-w-0 flex-1">
         <div className="truncate text-sm font-semibold text-stone-800 dark:text-stone-100">{habit.name}</div>
         <div className="text-xs text-stone-400">
-          {DIFFICULTY_LABELS[habit.difficulty]} · {stats.duration} días
-          {habit.completedAt && <> · {formatShortDate(habit.completedAt.slice(0, 10))}</>}
+          {t.difficulty[habit.difficulty]} · {stats.duration} {t.completedPanel.days(stats.duration)}
+          {habit.completedAt && <> · {formatShortDate(habit.completedAt.slice(0, 10), lang)}</>}
         </div>
       </div>
     </button>
@@ -38,12 +40,11 @@ function CompletedRow({ habit, onSelect }: { habit: Habit; onSelect: () => void 
 }
 
 export default function CompletedPanel({ habits, onClose, onSelect }: CompletedPanelProps) {
+  const { t } = useLanguage()
   return (
-    <Modal title={`Hábitos completados (${habits.length})`} onClose={onClose} maxWidth="max-w-lg">
+    <Modal title={t.completedPanel.title(habits.length)} onClose={onClose} maxWidth="max-w-lg">
       {habits.length === 0 ? (
-        <p className="py-8 text-center text-sm text-stone-400">
-          Todavía no has completado ningún hábito. Aparecerá aquí en cuanto termines el actual.
-        </p>
+        <p className="py-8 text-center text-sm text-stone-400">{t.completedPanel.empty}</p>
       ) : (
         <div className="space-y-2">
           {habits.map((h) => (

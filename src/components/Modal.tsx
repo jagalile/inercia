@@ -1,6 +1,7 @@
 import { X } from 'lucide-react'
 import type { ReactNode } from 'react'
 import { useEffect } from 'react'
+import { useLanguage } from '../i18n/LanguageContext'
 
 interface ModalProps {
   title: string
@@ -10,6 +11,7 @@ interface ModalProps {
 }
 
 export default function Modal({ title, onClose, children, maxWidth = 'max-w-md' }: ModalProps) {
+  const { t } = useLanguage()
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
@@ -32,7 +34,7 @@ export default function Modal({ title, onClose, children, maxWidth = 'max-w-md' 
           <h2 className="text-lg font-semibold tracking-tight">{title}</h2>
           <button
             onClick={onClose}
-            aria-label="Cerrar"
+            aria-label={t.common.close}
             className="rounded-full p-1.5 text-stone-400 transition hover:bg-stone-100 hover:text-stone-700 dark:hover:bg-neutral-800 dark:hover:text-stone-200"
           >
             <X size={18} />

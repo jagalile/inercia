@@ -1,4 +1,6 @@
-import type { ISODate } from '../types'
+import type { ISODate, Lang } from '../types'
+
+const LOCALES: Record<Lang, string> = { es: 'es-ES', en: 'en-US' }
 
 /** Returns today's date as a local YYYY-MM-DD string (never UTC-shifted). */
 export function todayISO(): ISODate {
@@ -33,16 +35,16 @@ export function diffDays(a: ISODate, b: ISODate): number {
   return Math.round((utcB - utcA) / msPerDay)
 }
 
-export function formatLongDate(iso: ISODate): string {
-  return fromISO(iso).toLocaleDateString('es-ES', {
+export function formatLongDate(iso: ISODate, lang: Lang = 'es'): string {
+  return fromISO(iso).toLocaleDateString(LOCALES[lang], {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
   })
 }
 
-export function formatShortDate(iso: ISODate): string {
-  return fromISO(iso).toLocaleDateString('es-ES', {
+export function formatShortDate(iso: ISODate, lang: Lang = 'es'): string {
+  return fromISO(iso).toLocaleDateString(LOCALES[lang], {
     day: 'numeric',
     month: 'short',
   })

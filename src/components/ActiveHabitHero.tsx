@@ -4,6 +4,7 @@ import type { Habit } from '../types'
 import { computeStats, getPhases } from '../lib/habitLogic'
 import { adherencePalette } from '../lib/color'
 import { formatLongDate, todayISO } from '../lib/dates'
+import { useLanguage } from '../i18n/LanguageContext'
 import PhaseBar from './PhaseBar'
 
 interface ActiveHabitHeroProps {
@@ -21,6 +22,7 @@ export default function ActiveHabitHero({
   onSetCheckin,
   onComplete,
 }: ActiveHabitHeroProps) {
+  const { t, lang } = useLanguage()
   const [hoverDelete, setHoverDelete] = useState(false)
   const today = todayISO()
   const stats = useMemo(() => computeStats(habit, today), [habit, today])
@@ -41,7 +43,7 @@ export default function ActiveHabitHero({
               className="text-xs font-semibold uppercase tracking-widest"
               style={{ color: palette.accent }}
             >
-              {palette.mood} · {stats.currentPhase.label}
+              {t.mood[palette.moodKey]} · {t.phase[stats.currentPhase.labelKey]}
             </p>
             <h1 className="mt-1 truncate text-2xl font-semibold tracking-tight text-stone-800 dark:text-stone-100">
               {habit.name}
@@ -53,7 +55,7 @@ export default function ActiveHabitHero({
           <div className="flex shrink-0 gap-1 pt-1">
             <button
               onClick={onEdit}
-              aria-label="Editar hábito"
+              aria-label={t.activeHero.editAria}
               className="rounded-full p-2 text-stone-400 transition hover:bg-stone-100 hover:text-stone-700 dark:hover:bg-neutral-800 dark:hover:text-stone-200"
             >
               <Pencil size={16} />
@@ -62,7 +64,7 @@ export default function ActiveHabitHero({
               onClick={onDelete}
               onMouseEnter={() => setHoverDelete(true)}
               onMouseLeave={() => setHoverDelete(false)}
-              aria-label="Eliminar hábito"
+              aria-label={t.activeHero.deleteAria}
               className={`rounded-full p-2 transition hover:bg-stone-100 dark:hover:bg-neutral-800 ${
                 hoverDelete ? 'text-red-500' : 'text-stone-400'
               }`}
@@ -83,7 +85,7 @@ export default function ActiveHabitHero({
             / {stats.duration}
           </span>
         </div>
-        <p className="mt-1 text-center text-sm text-stone-400">día del hábito</p>
+        <p className="mt-1 text-center text-sm text-stone-400">{t.activeHero.dayOfHabit}</p>
 
         <div className="mt-5 sm:mt-8">
           <PhaseBar phases={phases} currentDay={stats.currentDay} accent={palette.accent} />
@@ -95,7 +97,7 @@ export default function ActiveHabitHero({
               {stats.streak}
             </div>
             <div className="mt-1 text-xs font-medium uppercase tracking-wide text-stone-400">
-              Racha flexible
+              {t.activeHero.streakLabel}
             </div>
           </div>
           <div className="rounded-2xl border border-stone-100 bg-white/60 p-3 text-center dark:border-neutral-800 dark:bg-neutral-900/40 sm:p-4">
@@ -103,37 +105,37 @@ export default function ActiveHabitHero({
               {stats.doneCount + stats.missedCount === 0 ? '—' : `${stats.adherence}%`}
             </div>
             <div className="mt-1 text-xs font-medium uppercase tracking-wide text-stone-400">
-              Adherencia
+              {t.activeHero.adherenceLabel}
             </div>
           </div>
         </div>
 
         <p className="mt-3 text-center text-[12px] leading-relaxed text-stone-400 sm:mt-4">
           {stats.failBudgetTotal === 0
-            ? 'Nivel estricto: cada día cuenta, sin margen.'
-            : `Margen usado: ${stats.failBudgetTotal - stats.failBudgetLeft} de ${stats.failBudgetTotal} días.`}{' '}
-          Son datos informativos — no hay penalización.
+            ? t.activeHero.strictNote
+            : t.activeHero.marginUsed(stats.failBudgetTotal - stats.failBudgetLeft, stats.failBudgetTotal)}{' '}
+          {t.activeHero.informativeSuffix}
         </p>
 
         <div className="mt-5 sm:mt-8">
           {stats.isFinished ? (
             <div className="rounded-2xl border border-stone-200 bg-white p-5 text-center dark:border-neutral-800 dark:bg-neutral-900">
               <p className="text-sm font-medium text-stone-700 dark:text-stone-200">
-                Has llegado al final de los {stats.duration} días.
+                {t.activeHero.finishedTitle(stats.duration)}
               </p>
               <p className="mt-1 text-xs text-stone-400">
-                Iniciado el {formatLongDate(habit.startDate)} · adherencia final {stats.adherence}%
+                {t.activeHero.finishedSubtitle(formatLongDate(habit.startDate, lang), stats.adherence)}
               </p>
               <button
                 onClick={onComplete}
                 className="mt-4 rounded-full bg-stone-900 px-6 py-2.5 text-sm font-medium text-white transition hover:bg-stone-700 dark:bg-stone-100 dark:text-stone-900 dark:hover:bg-white"
               >
-                Completar y empezar otro
+                {t.activeHero.completeButton}
               </button>
             </div>
           ) : (
             <div className="flex flex-col items-center gap-3">
-              <p className="text-xs font-medium uppercase tracking-wide text-stone-400">Hoy</p>
+              <p className="text-xs font-medium uppercase tracking-wide text-stone-400">{t.activeHero.todayLabel}</p>
               {stats.todayStatus === 'pending' ? (
                 <div className="flex gap-3">
                   <button
@@ -142,26 +144,26 @@ export default function ActiveHabitHero({
                     style={{ backgroundColor: palette.accent, boxShadow: `0 10px 24px -8px ${palette.accent}` }}
                   >
                     <Check size={17} />
-                    Lo he cumplido
+                    {t.activeHero.doneButton}
                   </button>
                   <button
                     onClick={() => onSetCheckin(today, 'missed')}
                     className="flex items-center gap-2 rounded-full border border-stone-200 px-5 py-3 text-sm font-medium text-stone-500 transition hover:bg-stone-50 dark:border-neutral-700 dark:text-stone-400 dark:hover:bg-neutral-800"
                   >
                     <XIcon size={16} />
-                    Hoy no
+                    {t.activeHero.missedButton}
                   </button>
                 </div>
               ) : (
                 <div className="flex items-center gap-3 rounded-full border border-stone-200 py-2 pl-4 pr-2 dark:border-neutral-700">
                   <span className="text-sm text-stone-500 dark:text-stone-400">
-                    {stats.todayStatus === 'done' ? 'Hoy: cumplido ✓' : 'Hoy: sin cumplir'}
+                    {stats.todayStatus === 'done' ? t.activeHero.todayDoneStatus : t.activeHero.todayMissedStatus}
                   </span>
                   <button
                     onClick={() => onSetCheckin(today, null)}
                     className="rounded-full px-3 py-1 text-xs font-medium text-stone-400 transition hover:bg-stone-100 dark:hover:bg-neutral-800"
                   >
-                    Deshacer
+                    {t.activeHero.undo}
                   </button>
                 </div>
               )}

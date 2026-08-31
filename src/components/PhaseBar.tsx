@@ -1,4 +1,5 @@
 import type { HabitPhase } from '../types'
+import { useLanguage } from '../i18n/LanguageContext'
 
 interface PhaseBarProps {
   phases: HabitPhase[]
@@ -7,6 +8,7 @@ interface PhaseBarProps {
 }
 
 export default function PhaseBar({ phases, currentDay, accent }: PhaseBarProps) {
+  const { t } = useLanguage()
   return (
     <div className="w-full">
       <div className="flex h-1.5 w-full overflow-hidden rounded-full bg-stone-100 dark:bg-neutral-800">
@@ -32,7 +34,7 @@ export default function PhaseBar({ phases, currentDay, accent }: PhaseBarProps) 
               key={phase.key}
               className={`flex-1 text-center transition-colors ${isCurrent ? 'text-stone-700 dark:text-stone-200' : ''}`}
             >
-              {phase.label}
+              {t.phase[phase.labelKey]}
             </div>
           )
         })}

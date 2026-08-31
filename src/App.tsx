@@ -10,6 +10,7 @@ import CompletedHabitDetail from './components/CompletedHabitDetail'
 import SettingsPanel from './components/SettingsPanel'
 import ConfirmDialog from './components/ConfirmDialog'
 import InfoPanel from './components/InfoPanel'
+import { useLanguage } from './i18n/LanguageContext'
 
 type Overlay =
   | { kind: 'none' }
@@ -23,6 +24,7 @@ type Overlay =
   | { kind: 'reopen-blocked' }
 
 export default function App() {
+  const { t } = useLanguage()
   const {
     activeHabit,
     completedHabits,
@@ -113,9 +115,9 @@ export default function App() {
 
       {overlay.kind === 'confirm-delete' && (
         <ConfirmDialog
-          title="Eliminar hábito"
-          description={`Se eliminará "${overlay.habit.name}" y todo su historial de forma permanente. Esta acción no se puede deshacer.`}
-          confirmLabel="Eliminar"
+          title={t.dialogs.deleteTitle}
+          description={t.dialogs.deleteDescription(overlay.habit.name)}
+          confirmLabel={t.dialogs.deleteConfirm}
           danger
           onCancel={close}
           onConfirm={() => {
@@ -127,9 +129,9 @@ export default function App() {
 
       {overlay.kind === 'reopen-blocked' && (
         <ConfirmDialog
-          title="Ya tienes un hábito activo"
-          description="Solo puedes trabajar un hábito a la vez. Completa o elimina el hábito activo antes de reabrir este."
-          confirmLabel="Entendido"
+          title={t.dialogs.reopenBlockedTitle}
+          description={t.dialogs.reopenBlockedDescription}
+          confirmLabel={t.dialogs.gotIt}
           onCancel={close}
           onConfirm={close}
         />

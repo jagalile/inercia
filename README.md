@@ -34,6 +34,13 @@ adherencia real.
   según tu % de cumplimiento, en un degradado tranquilo de azul
   grisáceo (arrancando) a verde (sólido) — deliberadamente sin rojo.
 
+## Idioma
+
+Disponible en **español e inglés**. Se detecta automáticamente por el
+idioma del navegador (`navigator.language`) la primera vez que abres
+la app, y se puede cambiar a mano desde el icono de ajustes — la
+elección se recuerda para la próxima vez.
+
 ## PWA
 
 Es una Progressive Web App: se puede **instalar** (desde el menú del

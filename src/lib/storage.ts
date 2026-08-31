@@ -1,4 +1,4 @@
-import type { ExportPayload, Habit } from '../types'
+import type { ExportPayload, Habit, Lang } from '../types'
 
 const STORAGE_KEY = 'inercia:habits:v1'
 
@@ -32,21 +32,31 @@ export function buildExportPayload(habits: Habit[]): ExportPayload {
   }
 }
 
-export function downloadExport(habits: Habit[]): void {
+export function downloadExport(habits: Habit[], lang: Lang = 'es'): void {
   const payload = buildExportPayload(habits)
   const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' })
   const url = URL.createObjectURL(blob)
   const a = document.createElement('a')
   const date = new Date().toISOString().slice(0, 10)
+  const slug = lang === 'en' ? 'habits' : 'habitos'
   a.href = url
-  a.download = `inercia-habitos-${date}.json`
+  a.download = `inercia-${slug}-${date}.json`
   document.body.appendChild(a)
   a.click()
   a.remove()
   URL.revokeObjectURL(url)
 }
 
-export class ImportError extends Error {}
+export type ImportErrorReason = 'invalid_json' | 'bad_format' | 'no_habits'
+
+/** Thrown by parseImport with a machine reason — callers translate it. */
+export class ImportError extends Error {
+  reason: ImportErrorReason
+  constructor(reason: ImportErrorReason) {
+    super(reason)
+    this.reason = reason
+  }
+}
 
 /** Parses and validates an imported JSON file, returning the habit list. */
 export function parseImport(text: string): Habit[] {
@@ -54,7 +64,7 @@ export function parseImport(text: string): Habit[] {
   try {
     data = JSON.parse(text)
   } catch {
-    throw new ImportError('El archivo no es JSON válido.')
+    throw new ImportError('invalid_json')
   }
 
   const habitsRaw = Array.isArray(data)
@@ -64,12 +74,12 @@ export function parseImport(text: string): Habit[] {
       : null
 
   if (!habitsRaw) {
-    throw new ImportError('El archivo no tiene el formato esperado de Inercia.')
+    throw new ImportError('bad_format')
   }
 
   const habits = habitsRaw.filter(isHabitLike)
   if (habits.length === 0) {
-    throw new ImportError('No se ha encontrado ningún hábito válido en el archivo.')
+    throw new ImportError('no_habits')
   }
   return habits
 }

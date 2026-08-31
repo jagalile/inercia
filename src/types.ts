@@ -1,3 +1,7 @@
+export type Lang = 'es' | 'en'
+
+export type MoodKey = 'starting' | 'gaining' | 'moving' | 'steady' | 'solid'
+
 export type Difficulty = 'simple' | 'moderado' | 'complejo'
 
 export type Permissiveness = 'estricto' | 'moderado' | 'laxo'
@@ -24,9 +28,15 @@ export interface Habit {
   completedAt?: string
 }
 
+export type PhaseLabelKey = 'inicio' | 'consolidacion' | 'maestria' | 'cierre'
+
 export interface HabitPhase {
   key: 'inicio' | 'consolidacion' | 'maestria'
-  label: string
+  /** Which translated phase name to show — usually matches `key`,
+   * except the short "simple" habit's last phase reads as "cierre"
+   * rather than "maestría" (there isn't really room to earn mastery
+   * in 21 days). */
+  labelKey: PhaseLabelKey
   from: number
   to: number
 }

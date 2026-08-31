@@ -6,6 +6,16 @@
   color-scheme: light dark;
 }
 
+/* Chrome's native pull-to-refresh gesture rubber-bands the whole page
+   downward while you drag, briefly scrolling the header out of view
+   and reshuffling the layout as it bounces back — that's the "hidden
+   header + scroll" on reload/refresh. overscroll-behavior is Chrome's
+   documented way to opt a page out of that gesture entirely. */
+html,
+body {
+  overscroll-behavior-y: none;
+}
+
 /* dvh tracks the *actual* visible viewport as mobile browser toolbars
    show/hide; a plain "100%"/vh chain here would re-introduce a
    phantom scroll on reload even though App.tsx's own min-h-dvh is

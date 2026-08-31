@@ -29,13 +29,13 @@ export default function ActiveHabitHero({
 
   return (
     <div
-      className="flex flex-1 flex-col items-center justify-center px-6 py-10 transition-colors duration-700 animate-fade-in"
+      className="flex flex-1 flex-col items-center justify-center px-6 py-5 transition-colors duration-700 animate-fade-in sm:py-10"
       style={{
         background: `radial-gradient(circle at 50% 0%, ${palette.accentSoft}, transparent 60%)`,
       }}
     >
       <div className="w-full max-w-md">
-        <div className="mb-8 flex items-start justify-between gap-3">
+        <div className="mb-4 flex items-start justify-between gap-3 sm:mb-8">
           <div className="min-w-0">
             <p
               className="text-xs font-semibold uppercase tracking-widest"
@@ -74,32 +74,32 @@ export default function ActiveHabitHero({
 
         <div className="flex items-end justify-center gap-3">
           <span
-            className="text-[7.5rem] font-extrabold leading-none tabular-nums transition-colors duration-700"
+            className="text-[5.5rem] font-extrabold leading-none tabular-nums transition-colors duration-700 sm:text-[7.5rem]"
             style={{ color: palette.accent }}
           >
             {stats.currentDay}
           </span>
-          <span className="mb-4 text-2xl font-medium text-stone-300 dark:text-neutral-700">
+          <span className="mb-2 text-xl font-medium text-stone-300 dark:text-neutral-700 sm:mb-4 sm:text-2xl">
             / {stats.duration}
           </span>
         </div>
         <p className="mt-1 text-center text-sm text-stone-400">día del hábito</p>
 
-        <div className="mt-8">
+        <div className="mt-5 sm:mt-8">
           <PhaseBar phases={phases} currentDay={stats.currentDay} accent={palette.accent} />
         </div>
 
-        <div className="mt-10 grid grid-cols-2 gap-4">
-          <div className="rounded-2xl border border-stone-100 bg-white/60 p-4 text-center dark:border-neutral-800 dark:bg-neutral-900/40">
-            <div className="text-4xl font-bold tabular-nums text-stone-800 dark:text-stone-100">
+        <div className="mt-5 grid grid-cols-2 gap-3 sm:mt-10 sm:gap-4">
+          <div className="rounded-2xl border border-stone-100 bg-white/60 p-3 text-center dark:border-neutral-800 dark:bg-neutral-900/40 sm:p-4">
+            <div className="text-3xl font-bold tabular-nums text-stone-800 dark:text-stone-100 sm:text-4xl">
               {stats.streak}
             </div>
             <div className="mt-1 text-xs font-medium uppercase tracking-wide text-stone-400">
               Racha flexible
             </div>
           </div>
-          <div className="rounded-2xl border border-stone-100 bg-white/60 p-4 text-center dark:border-neutral-800 dark:bg-neutral-900/40">
-            <div className="text-4xl font-bold tabular-nums text-stone-800 dark:text-stone-100">
+          <div className="rounded-2xl border border-stone-100 bg-white/60 p-3 text-center dark:border-neutral-800 dark:bg-neutral-900/40 sm:p-4">
+            <div className="text-3xl font-bold tabular-nums text-stone-800 dark:text-stone-100 sm:text-4xl">
               {stats.doneCount + stats.missedCount === 0 ? '—' : `${stats.adherence}%`}
             </div>
             <div className="mt-1 text-xs font-medium uppercase tracking-wide text-stone-400">
@@ -108,14 +108,14 @@ export default function ActiveHabitHero({
           </div>
         </div>
 
-        <p className="mt-4 text-center text-[12px] leading-relaxed text-stone-400">
+        <p className="mt-3 text-center text-[12px] leading-relaxed text-stone-400 sm:mt-4">
           {stats.failBudgetTotal === 0
             ? 'Nivel estricto: cada día cuenta, sin margen.'
             : `Margen usado: ${stats.failBudgetTotal - stats.failBudgetLeft} de ${stats.failBudgetTotal} días.`}{' '}
           Son datos informativos — no hay penalización.
         </p>
 
-        <div className="mt-8">
+        <div className="mt-5 sm:mt-8">
           {stats.isFinished ? (
             <div className="rounded-2xl border border-stone-200 bg-white p-5 text-center dark:border-neutral-800 dark:bg-neutral-900">
               <p className="text-sm font-medium text-stone-700 dark:text-stone-200">

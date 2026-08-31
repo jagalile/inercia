@@ -9,7 +9,7 @@ interface HeaderProps {
 
 export default function Header({ completedCount, onOpenCompleted, onOpenSettings, onOpenInfo }: HeaderProps) {
   return (
-    <header className="flex items-center justify-between px-6 py-5">
+    <header className="flex items-center justify-between px-6 py-4 sm:py-5">
       <span className="text-sm font-bold uppercase tracking-[0.2em] text-stone-400">Inercia</span>
       <div className="flex items-center gap-1">
         <button

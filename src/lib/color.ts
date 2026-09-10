@@ -1,8 +1,18 @@
 /**
  * Maps adherence (0-100) to a calm hue gradient: cool slate-blue at the
- * low end, through amber, to emerald at the high end. Deliberately
+ * low end, through teal, to emerald at the high end. Deliberately
  * avoids red — low adherence is "still finding footing", not a
  * failure state, so nothing here reads as a warning or punishment.
+ *
+ * The hue stops below are chosen to move in a single direction
+ * (decreasing) across the whole 0-100 range. Hue is a circle, so
+ * naively lerping between two arbitrary hues can sweep through
+ * whatever colors happen to sit between them on the wheel — an
+ * earlier version went blue (210) -> amber (40) -> teal (165), and
+ * that 210->40 leg swept straight through green on the way, making a
+ * *mid* adherence briefly look more "solved" (green) than a *higher*
+ * one landing on the amber dip. Keeping every stop on one monotonic
+ * slope guarantees higher adherence never looks worse than lower.
  */
 import type { MoodKey } from '../types'
 
@@ -20,11 +30,11 @@ export interface AdherencePalette {
 }
 
 const STOPS: { at: number; hue: number; sat: number; moodKey: MoodKey }[] = [
-  { at: 0, hue: 222, sat: 45, moodKey: 'starting' },
-  { at: 35, hue: 210, sat: 50, moodKey: 'gaining' },
-  { at: 60, hue: 40, sat: 65, moodKey: 'moving' },
+  { at: 0, hue: 222, sat: 42, moodKey: 'starting' },
+  { at: 35, hue: 205, sat: 46, moodKey: 'gaining' },
+  { at: 60, hue: 185, sat: 50, moodKey: 'moving' },
   { at: 80, hue: 165, sat: 55, moodKey: 'steady' },
-  { at: 100, hue: 152, sat: 60, moodKey: 'solid' },
+  { at: 100, hue: 150, sat: 60, moodKey: 'solid' },
 ]
 
 function lerp(a: number, b: number, t: number): number {
